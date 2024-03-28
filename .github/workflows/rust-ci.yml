@@ -22,7 +22,7 @@ jobs:
         with:
           profile: minimal
           components: rustfmt
-          toolchain-file: true
+          override: true
 
       - name: Check format
         run: cargo fmt --check --all
@@ -44,7 +44,7 @@ jobs:
         with:
           profile: minimal
           components: rustfmt, clippy
-          toolchain-file: true
+          override: true
 
       - name: Cache Cargo dependencies
         uses: actions/cache@v2
