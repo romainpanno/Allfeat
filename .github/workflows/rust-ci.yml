@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -37,7 +37,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -50,12 +50,20 @@ jobs:
       - name: Explicitly install wasm32 target
         run: rustup target add wasm32-unknown-unknown --toolchain nightly
 
-      - name: Install system dependencies
+      - name: Install system dependencies (Linux)
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y llvm libclang-dev protobuf-compiler
 
+      - name: Install system dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install llvm protobuf
+
+      - name: Install system dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: choco install protobuf
+
       - name: Cache Cargo dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
