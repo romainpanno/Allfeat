@@ -44,7 +44,7 @@ jobs:
         with:
           toolchain: nightly
           override: true
-          components: rustfmt, clippy
+          components: rustfmt, clippy, rust-src
           targets: wasm32-unknown-unknown
 
       - name: Explicitly install wasm32 target
