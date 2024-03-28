@@ -19,10 +19,6 @@ jobs:
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          components: rustfmt
-          override: true
 
       - name: Check format
         run: cargo fmt --check --all
@@ -41,10 +37,6 @@ jobs:
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          components: rustfmt, clippy
-          override: true
 
       - name: Cache Cargo dependencies
         uses: actions/cache@v2
