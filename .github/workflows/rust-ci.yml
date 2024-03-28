@@ -47,6 +47,9 @@ jobs:
           components: rustfmt, clippy
           targets: wasm32-unknown-unknown
 
+      - name: Explicitly install wasm32 target
+        run: rustup target add wasm32-unknown-unknown --toolchain nightly
+
       - name: Install system dependencies
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y llvm libclang-dev protobuf-compiler
