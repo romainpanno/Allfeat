@@ -45,10 +45,7 @@ jobs:
           toolchain: nightly
           override: true
           components: rustfmt, clippy, rust-src
-          targets: wasm32-unknown-unknown
-
-      - name: Explicitly install wasm32 target
-        run: rustup target add wasm32-unknown-unknown --toolchain nightly
+          target: wasm32-unknown-unknown
 
       - name: Install system dependencies (Linux)
         if: runner.os == 'Linux'
