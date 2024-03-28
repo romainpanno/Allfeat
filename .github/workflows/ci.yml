@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - add-ci-for-format-checker
   pull_request:
     branches:
       - master
