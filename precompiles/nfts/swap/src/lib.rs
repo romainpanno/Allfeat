@@ -181,8 +181,4 @@ where
 			.try_into()
 			.map_err(|_| RevertReason::value_is_too_large("CollectionId type").into())
 	}
-
-	fn oui(  ) {println!("hello"
-)
-;}
 }
