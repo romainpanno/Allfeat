@@ -47,6 +47,9 @@ jobs:
           components: rustfmt, clippy, rust-src
           target: wasm32-unknown-unknown
 
+      - name: Optimize Cargo Build Jobs
+        run: echo "CARGO_BUILD_JOBS=$(nproc || sysctl -n hw.logicalcpu)" >> $GITHUB_ENV
+
       - name: Install system dependencies (Linux)
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y llvm libclang-dev protobuf-compiler
@@ -58,9 +61,6 @@ jobs:
       - name: Install system dependencies (Windows)
         if: runner.os == 'Windows'
         run: choco install protobuf
-
-      - name: Set Custom Build Jobs
-        run: echo "CARGO_BUILD_JOBS=$(nproc)" >> $GITHUB_ENV
 
       - name: Cache Cargo dependencies
         uses: actions/cache@v4
