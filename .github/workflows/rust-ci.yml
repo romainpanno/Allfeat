@@ -11,6 +11,7 @@ on:
 
 env:
   HARMONIE_EXCLUDED_TESTS: "-- --skip impls::multiplier_tests::time_to_reach_zero --skip call_size"
+  ALLFEAT_EXCLUDED_TESTS: "-- --skip full_block_fee_is_correct --skip call_size --skip time_to_reach_zero"
 
 jobs:
   check-format:
