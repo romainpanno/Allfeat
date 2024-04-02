@@ -83,4 +83,4 @@ jobs:
         run: cargo test -p harmonie-runtime --all-features $HARMONIE_EXCLUDED_TESTS
 
       - name: Test Allfeat Runtime
-        run: cargo test -p allfeat-runtime --all-features
+        run: cargo test -p allfeat-runtime --all-features $ALLFEAT_EXCLUDED_TESTS
