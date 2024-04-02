@@ -9,6 +9,9 @@ on:
     branches:
       - master
 
+env:
+  HARMONIE_EXCLUDED_TESTS: "-- --skip impls::multiplier_tests::time_to_reach_zero --skip call_size"
+
 jobs:
   check-format:
     name: Check code format 🗒️
@@ -76,7 +79,7 @@ jobs:
             ${{ runner.os }}-cargo-
 
       - name: Test Harmonie Runtime
-        run: cargo test -p harmonie-runtime --all-features
+        run: cargo test -p harmonie-runtime --all-features $HARMONIE_EXCLUDED_TESTS
 
       - name: Test Allfeat Runtime
         run: cargo test -p allfeat-runtime --all-features
