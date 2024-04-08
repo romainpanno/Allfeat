@@ -26,3 +26,53 @@ jobs:
 
       - name: Check format
         run: cargo fmt --check --all
+
+  test:
+    name: Run tests 🧪
+    needs: check-format
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Rust 🦀
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy, rust-src
+          target: wasm32-unknown-unknown
+
+      - name: Optimize Cargo Build Jobs
+        run: echo "CARGO_BUILD_JOBS=$(nproc || sysctl -n hw.logicalcpu)" >> $GITHUB_ENV
+
+      - name: Install system dependencies (Linux) 🐧
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y llvm libclang-dev protobuf-compiler
+
+      - name: Install system dependencies (macOS) 🍏
+        if: runner.os == 'macOS'
+        run: brew install llvm protobuf
+
+      - name: Cache Cargo dependencies 📦
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Test Harmonie Runtime
+        run: cargo test -p harmonie-runtime --all-features
+
+      - name: Test Allfeat Runtime
+        run: cargo test -p allfeat-runtime --all-features
